@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+button{
+    width: 95px;
+    height: 95px;
+    background-color: #339989;
+    color: #FDFDFD;
+    font-size: 64px;
+    font-family: "Inter", sans-serif;
+    stroke: black;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    border: 0px;
+}
+
+button:hover{
+    transform: scale(1.1);
+    background-color: #39b9a6;
+    border-radius: 10px;
+}
+
+.resposta{
+    font-family: "Inter", sans-serif;
+    font-size: 50px;
+    color: white;
+    margin-bottom: 15%;
+}
+
+.botoesPrimeiraColuna{
+    gap: 25px;
+    display: flex;
+    flex-direction: row;
+}
+
+.botoesSegundaColuna{
+    margin-top: 10px;
+    gap: 25px;
+    display: flex;
+    flex-direction: row;
+}
+
+.botoesTerceiraColuna{
+    margin-top: 10px;
+    gap: 25px;
+    display: flex;
+    flex-direction: row;
+}
+
+.botoesQuartaColuna{
+    margin-top: 10px;
+    gap: 25px;
+    display: flex;
+    flex-direction: row;
+}
+
+.btnSeta{
+    background-color: #FDFDFD;
+    color: black;
+}
+
+.arcos{
+    font-size: 45px;
+}
+
+
+.mainBackground{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
