@@ -1,3 +1,26 @@
+"""
+[Lexico]
+
+Variáveis: apenas uma letra
+
+Constantes: números sem sinais
+
+Operadores: + - * / ^ =
+
+Letra grega: alpha, beta, gamma, delta, elipson, zeta, eta, theta, iota, kappa, lambda, mu, nu, xi, omikron, pi, rho, sigma, tau, upsilon, phi, chi, psi, omega
+
+Funções: log, cos, sen, tg
+
+Delimitadores: ( ) ,
+
+"""
+
+letters = {'alpha', 'beta', 'gamma', 'delta', 'elipson', 'zeta', 'eta', 'theta', 'iota', 'kappa', 
+                  'lambda', 'mu', 'nu', 'xi', 'omikron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', 'phi', 
+                  'chi', 'psi', 'omega'}
+
+functions = {'sin', 'cos', 'tan', 'ln', 'log'}
+
 class Lexic:
     def __init__(self):
         self.current_state = 'q0'
@@ -12,12 +35,12 @@ class Lexic:
             elif char.isalpha():
                 self.symbol += char
                 self.current_state = 'q4'
-            elif char in {'+', '-', '/', '*', '^'}:
+            elif char in {'+', '-', '/', '*', '^', '='}:
                 self.symbol += char
                 self.current_state = 'q6'
             elif char in {' ', '\t', '\0'}:
                 pass
-            elif char in {'(', ')'}:
+            elif char in {'(', ')', ','}:
                 self.symbol += char
                 self.current_state = 'q7'
             else:
@@ -54,8 +77,11 @@ class Lexic:
             if char.isalpha():
                 self.symbol += char
             else:
-                if self.symbol in reserved_words:
+                if self.symbol in letters:
                     self.reset('VARIAVEL')
+                    self.transition(char)
+                elif self.symbol in functions:
+                    self.reset('FUNCAO')
                     self.transition(char)
                 else:
                     self.current_state = 'invalid'
@@ -78,8 +104,9 @@ class Lexic:
             self.transition(char)
 
             if self.current_state == 'invalid':
-                raise Exception(f'[LEXICO]: Caractere \'{char}\' inválido!')
+                raise Exception(f'Caractere \'{char}\' inválido!')
 
+        self.symbols_table.append(('EOF', 'EOF'))
         return self.symbols_table
         ##for tuple in self.symbols_table:
             ##print("{:<5} {:<10}".format(*tuple))
