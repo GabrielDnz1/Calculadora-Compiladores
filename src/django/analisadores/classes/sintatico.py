@@ -188,7 +188,7 @@ class Sintatic:
         if self.current_token[1] != 'CONSTANTE':
             raise SyntaxError('esperado uma constante')
 
-        self.factory.create_variable(self.current_token[0])
+        self.factory.create_constant(self.current_token[0])
         ##print(self.abs_tree)
         size = len(self.factory.abs_tree) - 1
         self.factory.create_binary_expression('^', self.factory.abs_tree[size-1], self.factory.abs_tree[size])
