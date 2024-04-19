@@ -23,8 +23,6 @@ while(result):
     print(result)
 
     if result:
-        solucionador.setConfig(analisador_sintatico.semantico.flags)
-        
-        solution = solucionador.solve(analisador_sintatico.factory.abs_tree[0])
+        solution = solucionador.simplify(analisador_sintatico.factory.abs_tree[0])
 
-        print(solution.get())
+        print(solution)

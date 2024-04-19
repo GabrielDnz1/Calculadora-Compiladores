@@ -35,6 +35,11 @@ class Sintatic:
     """
     [Sintático]
 
+    sistema -> { lista_de_equações }
+
+    lista_de_equações -> equacao lista_de_equações'
+    lista_de_equações' -> , equacao lista_de_equações
+
     equacao -> expressão = expressão
 
     expressão -> termo expressão'| sinal termo expressão'
@@ -47,7 +52,7 @@ class Sintatic:
 
     base -> variavel | constante variavel | constante | funcao(lista_de_parametros) | (expressão)
 
-    potência -> constante
+    potência -> constante 
 
     lista_de_parametros -> parametro lista_de_parametros'
     lista_de_parametros' -> , parametro lista_de_parametros' | e
@@ -60,7 +65,6 @@ class Sintatic:
         self.expressao()
 
         if self.current_token[0] == '=':
-            self.semantico.isEquation()
             self.next()
 
             self.expressao()
@@ -127,7 +131,7 @@ class Sintatic:
                     raise SyntaxError(e)
             
             size = len(self.factory.abs_tree) - 1
-            self.factory.create_fraction(self.factory.abs_tree[size-1], self.factory.abs_tree[size])
+            self.factory.create_binary_expression('/', self.factory.abs_tree[size-1], self.factory.abs_tree[size])
             
     def fator(self):
         self.base()
@@ -147,7 +151,6 @@ class Sintatic:
             ##print(self.abs_tree)
             self.next()
 
-            """
             if self.current_token[1] == 'VARIAVEL':
                 self.semantico.check_variable(self.current_token[0])
                 self.factory.create_variable(self.current_token[0])
@@ -155,7 +158,7 @@ class Sintatic:
                 size = len(self.factory.abs_tree) - 1
                 self.factory.create_binary_expression('*', self.factory.abs_tree[size-1], self.factory.abs_tree[size])
                 self.next()
-            """
+            
         elif self.current_token[1] == 'FUNCAO':
             funcao = self.current_token[0]
             self.next()
@@ -167,7 +170,8 @@ class Sintatic:
 
             self.lista_de_parametros()
 
-            self.semantico.check_parameters(funcao)
+            self.semantico.check_parameters(funcao, len(self.factory.parameters))
+            self.factory.create_function(funcao)
 
             if self.current_token[0] != ')':
                 raise SyntaxError('esperado \')\'')
@@ -198,9 +202,8 @@ class Sintatic:
         if self.current_token[1] != 'CONSTANTE':
             raise SyntaxError('esperado uma constante')
         
+        self.factory.create_parameter(self.current_token)
         self.next()
-
-        self.semantico.parameters += 1
 
         if self.current_token[0] == ',':
             self.next()
