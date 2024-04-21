@@ -1,16 +1,13 @@
-import React from 'react';
-import Header from "./components/Header/Header";
-import Main from "./components/Main/Main";
-import Footer from "./components/Footer/Footer";
+import React from "react";
+import Header from "./Components/Header/Header";
 import styles from "./app.module.css";
-
+import Keyboard from "./Components/Keyboard/Keyboard";
 
 function App() {
   return (
-    <div className={styles.body}>
+    <div className={styles.app}>
       <Header />
-      <Main />
-      <Footer />
+      <Keyboard />
     </div>
   );
 }
