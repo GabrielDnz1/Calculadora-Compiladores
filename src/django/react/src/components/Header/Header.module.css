@@ -1,10 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap");
 
-.tituloHeader{
-    margin-left: 20px;
-    font-size: 30px;
-    font-family: "Bungee Shade", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    color: white;
+header {
+  top: 0px;
+  background-color: black;
+  width: 100%;
+}
+.tituloHeader {
+  margin-left: 20px;
+  font-size: 30px;
+  font-family: "Bungee Shade", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: rgb(255, 255, 255);
 }
