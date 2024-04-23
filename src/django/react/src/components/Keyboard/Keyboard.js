@@ -1,61 +1,145 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Keyboard.module.css";
 
 function Keyboard() {
+  const [inputValue, setInputValue] = useState("");
+  const [isNumericKeyboard, setIsNumericKeyboard] = useState(false);
+
   useEffect(() => {
     const base = document.querySelector(`.${styles.base}`);
     base.onclick = function (event) {
       const target = event.target;
       if (target.tagName === "SPAN") {
-        const resposta = document.getElementById("resposta");
-        if (resposta.innerHTML === "Digite pelos botões abaixo") {
-          resposta.innerHTML = "";
-        }
-        resposta.innerHTML += target.textContent;
+        setInputValue((prevValue) => prevValue + target.textContent);
       }
     };
   }, []);
 
+  function deletaLetra() {
+    setInputValue((prevValue) => prevValue.slice(0, -1));
+  }
+
+  function MudarKeyboardNumerico() {
+    setIsNumericKeyboard((prevValue) => !prevValue);
+  }
+
+  function botaoDeEnter() {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  function ClearInput() {
+    setInputValue("");
+  }
+
   return (
     <div className={styles.input_e_Base}>
-      <textarea className={styles.Input} id="resposta"></textarea>
+      <textarea
+        className={styles.Input}
+        id="resposta"
+        value={inputValue}
+        readOnly
+      ></textarea>
       <div className={styles.base}>
         <div className={styles.line1}>
-          <span className={styles.tecla_Q}>Q</span>
-          <span className={styles.tecla_W}>W</span>
-          <span className={styles.tecla_E}>E</span>
-          <span className={styles.tecla_Y}>Y</span>
-          <span className={styles.tecla_U}>U</span>
-          <span className={styles.tecla_I}>I</span>
-          <span className={styles.tecla_O}>O</span>
-          <span className={styles.tecla_P}>P</span>
+          <span className={`${styles.tecla} ${styles.tecla_Q}`}>
+            {isNumericKeyboard ? "1" : "Q"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_W}`}>
+            {isNumericKeyboard ? "2" : "W"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_E}`}>
+            {isNumericKeyboard ? "3" : "E"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_R}`}>
+            {isNumericKeyboard ? "4" : "R"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_T}`}>
+            {isNumericKeyboard ? "5" : "T"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_Y}`}>
+            {isNumericKeyboard ? "6" : "Y"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_U}`}>
+            {isNumericKeyboard ? "7" : "U"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_I}`}>
+            {isNumericKeyboard ? "8" : "I"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_O}`}>
+            {isNumericKeyboard ? "9" : "O"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_P}`}>
+            {isNumericKeyboard ? "0" : "P"}
+          </span>
         </div>
         <div className={styles.line2}>
-          <span className={styles.tecla_A}>A</span>
-          <span className={styles.tecla_S}>S</span>
-          <span className={styles.tecla_D}>D</span>
-          <span className={styles.tecla_F}>F</span>
-          <span className={styles.tecla_G}>G</span>
-          <span className={styles.tecla_H}>H</span>
-          <span className={styles.tecla_J}>J</span>
-          <span className={styles.tecla_K}>K</span>
-          <span className={styles.tecla_L}>L</span>
+          <span className={`${styles.tecla} ${styles.tecla_A}`}>
+            {isNumericKeyboard ? "ln" : "A"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_S}`}>
+            {isNumericKeyboard ? "sin" : "S"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_D}`}>
+            {isNumericKeyboard ? "cos" : "D"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_F}`}>
+            {isNumericKeyboard ? "tg" : "F"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_G}`}>
+            {isNumericKeyboard ? "√" : "G"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_H}`}>
+            {isNumericKeyboard ? "(" : "H"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_J}`}>
+            {isNumericKeyboard ? ")" : "J"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_K}`}>
+            {isNumericKeyboard ? "{" : "K"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_L}`}>
+            {isNumericKeyboard ? "}" : "L"}
+          </span>
         </div>
         <div className={styles.line3}>
-          <span className={styles.tecla_PI}>π</span>
-          <span className={styles.tecla_Z}>Z</span>
-          <span className={styles.tecla_X}>X</span>
-          <span className={styles.tecla_C}>C</span>
-          <span className={styles.tecla_V}>V</span>
-          <span className={styles.tecla_B}>B</span>
-          <span className={styles.tecla_N}>N</span>
-          <span className={styles.tecla_M}>M</span>
-          <span className={styles.tecla_Delete}>Del</span>
+          <span className={`${styles.tecla} ${styles.tecla_PI}`}>
+            {isNumericKeyboard ? "π" : "π"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_Z}`}>
+            {isNumericKeyboard ? "+" : "Z"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_X}`}>
+            {isNumericKeyboard ? "-" : "X"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_C}`}>
+            {isNumericKeyboard ? "×" : "C"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_V}`}>
+            {isNumericKeyboard ? "÷" : "V"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_B}`}>
+            {isNumericKeyboard ? "," : "B"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_N}`}>
+            {isNumericKeyboard ? "^" : "N"}
+          </span>
+          <span className={`${styles.tecla} ${styles.tecla_M}`}>
+            {isNumericKeyboard ? "=" : "M"}
+          </span>
+          <button className={styles.Delete} onClick={deletaLetra}>
+            Del
+          </button>
         </div>
         <div className={styles.line4}>
-          <span className={styles.altnum}>123</span>
-          <span className={styles.spacebar}>Space</span>
-          <span className={styles.enter}>Enter</span>
+          <button className={styles.altnum} onClick={MudarKeyboardNumerico}>
+            {isNumericKeyboard ? "ABC" : "123"}
+          </button>
+          <button className={styles.spacebar} onClick={ClearInput}>
+            Clear
+          </button>
+          <button className={styles.enter} onClick={botaoDeEnter}>
+            Solve
+          </button>
         </div>
       </div>
     </div>
