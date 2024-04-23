@@ -3,7 +3,9 @@
 
 Variáveis: apenas uma letra
 
-Constantes: números sem sinais
+Naturais: números naturais
+
+Racionais: números racionais
 
 Operadores: + - * / ^ =
 
@@ -52,7 +54,7 @@ class Lexic:
             elif char.isdigit():
                 self.symbol += char
             else:
-                self.reset('CONSTANTE')
+                self.reset('NATURAL')
                 self.transition(char)
         elif self.current_state == 'q2':
             if char.isdigit():
@@ -64,7 +66,7 @@ class Lexic:
             if char.isdigit():
                 self.symbol += char
             else:
-                self.reset('CONSTANTE')
+                self.reset('RACIONAL')
                 self.transition(char)
         elif self.current_state == 'q4':
             if char.isalpha():

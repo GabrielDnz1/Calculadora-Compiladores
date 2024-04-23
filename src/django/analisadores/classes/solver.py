@@ -27,6 +27,15 @@ class Solver:
                 return expression.e1 ** expression.e2
             elif op == '=':
                 return solve(Eq(expression.e1, expression.e2))
+        elif expression.get_type() == Exp.UNARY_OP:
+            op = expression.get_operation()
+
+            # Simplifica o termo
+            expression.expression = self.simplify(expression.expression)
+
+            if op == '-':
+                return expression.expression * -1
+            
         elif expression.get_type() == Exp.CONSTANT:
             return expression.get_value()
         elif expression.get_type() == Exp.VARIABLE:

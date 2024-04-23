@@ -20,12 +20,16 @@ class Function(Expression):
         return self.parameters
 
 class Constant(Expression):
-    def __init__(self, value):
+    def __init__(self, value, constant_type):
         super().__init__(Exp.CONSTANT)
         self.value = value
+        self.constant_type = constant_type
     
     def get_value(self):
-        return float(self.value)
+        if self.constant_type == 'NATURAL':
+            return int(self.value)
+        else:
+            return float(self.value)
     
 class Variable(Expression):
     def __init__(self, base, exp, coefficient):
@@ -47,15 +51,15 @@ class Operation(Expression):
     def __init__(self, type, operation):
         super().__init__(type)
         self.operation = operation
+    
+    def get_operation(self):
+        return self.operation
 
 class BinaryOperation(Operation):
     def __init__(self, operation, e1, e2):
         super().__init__(Exp.BINARY_OP, operation)
         self.e1 = e1
         self.e2 = e2
-
-    def get_operation(self):
-        return self.operation
 
 class UnaryOperation(Operation):
     def __init__(self, operation, expression):
@@ -79,11 +83,11 @@ class Factory:
         self.abs_tree.append(op)
     
     def create_variable(self, variable):
-        variable = Variable(variable, Constant(1), Constant(1))
+        variable = Variable(variable, Constant(1, 'NATURAL'), Constant(1, 'NATURAL'))
         self.abs_tree.append(variable)
     
-    def create_constant(self, constant):
-        constant  = Constant(constant)
+    def create_constant(self, constant, constant_type):
+        constant  = Constant(constant, constant_type)
         self.abs_tree.append(constant)
     
     def create_function(self, func):
@@ -92,5 +96,5 @@ class Factory:
         self.parameters.clear()
     
     def create_parameter(self, parameter):
-        parameter = Constant(parameter[0])
+        parameter = Constant(parameter[0], parameter[1])
         self.parameters.append(parameter)

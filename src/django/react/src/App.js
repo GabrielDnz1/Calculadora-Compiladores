@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "./Components/Header/Header";
+import Header from "./components/Header/Header";
 import styles from "./app.module.css";
-import Keyboard from "./Components/Keyboard/Keyboard";
+import Keyboard from "./components/Keyboard/Keyboard";
 
 function App() {
   return (

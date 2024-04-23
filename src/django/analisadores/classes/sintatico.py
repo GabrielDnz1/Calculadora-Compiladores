@@ -35,6 +35,8 @@ class Sintatic:
     """
     [Sintático]
 
+    texto -> sistema | equacao | expressão
+
     sistema -> { lista_de_equações }
 
     lista_de_equações -> equacao lista_de_equações'
@@ -48,16 +50,20 @@ class Sintatic:
     termo -> fator termo'
     termo' -> operador_multiplicativo fator termo' | e
 
-    fator -> base ^ potência
+    fator -> funcao(lista_de_parametros) ^ potência | constante atomico
 
-    base -> variavel | constante variavel | constante | funcao(lista_de_parametros) | (expressão)
+    atomico -> base ^ potência | e
 
-    potência -> constante 
+    base -> funcao(lista_de_parametros) | constante | e
+
+    constante -> num | variavel | (expressão)
+
+    potência -> num 
 
     lista_de_parametros -> parametro lista_de_parametros'
     lista_de_parametros' -> , parametro lista_de_parametros' | e
 
-    parametro -> constante
+    parametro -> num
 
     """
 
@@ -71,8 +77,7 @@ class Sintatic:
 
             self.semantico.check_equation()
 
-            size = len(self.factory.abs_tree) - 1
-            self.factory.create_binary_expression('=', self.factory.abs_tree[size-1], self.factory.abs_tree[size])
+            self.factory.create_binary_expression('=', self.factory.abs_tree[-2], self.factory.abs_tree[-1])
 
         if self.current_token[1] == 'EOF':
             self.next()
@@ -97,8 +102,7 @@ class Sintatic:
 
             self.termo()
 
-            size = len(self.factory.abs_tree) - 1
-            self.factory.create_binary_expression(op, self.factory.abs_tree[size-1], self.factory.abs_tree[size])
+            self.factory.create_binary_expression(op, self.factory.abs_tree[-2], self.factory.abs_tree[-1])
 
             self.expressao_2()
 
@@ -116,8 +120,7 @@ class Sintatic:
                 else:
                     raise SyntaxError(e)
             
-            size = len(self.factory.abs_tree) - 1
-            self.factory.create_binary_expression('*', self.factory.abs_tree[size-1], self.factory.abs_tree[size])
+            self.factory.create_binary_expression('*', self.factory.abs_tree[-2], self.factory.abs_tree[-1])
 
         elif self.current_token[0] == '/':
             self.next()
@@ -130,36 +133,10 @@ class Sintatic:
                 else:
                     raise SyntaxError(e)
             
-            size = len(self.factory.abs_tree) - 1
-            self.factory.create_binary_expression('/', self.factory.abs_tree[size-1], self.factory.abs_tree[size])
+            self.factory.create_binary_expression('/', self.factory.abs_tree[-2], self.factory.abs_tree[-1])
             
     def fator(self):
-        self.base()
-
-        if self.current_token[0] == '^':
-            self.next()
-            self.potencia()
-
-    def base(self):
-        if self.current_token[1] == 'VARIAVEL':
-            self.semantico.check_variable(self.current_token[0])
-            self.factory.create_variable(self.current_token[0])
-            ##print(self.abs_tree)
-            self.next()
-        elif self.current_token[1] == 'CONSTANTE':
-            self.factory.create_constant(self.current_token[0])
-            ##print(self.abs_tree)
-            self.next()
-
-            if self.current_token[1] == 'VARIAVEL':
-                self.semantico.check_variable(self.current_token[0])
-                self.factory.create_variable(self.current_token[0])
-                ##print(self.abs_tree)
-                size = len(self.factory.abs_tree) - 1
-                self.factory.create_binary_expression('*', self.factory.abs_tree[size-1], self.factory.abs_tree[size])
-                self.next()
-            
-        elif self.current_token[1] == 'FUNCAO':
+        if self.current_token[1] == 'FUNCAO':
             funcao = self.current_token[0]
             self.next()
 
@@ -177,6 +154,67 @@ class Sintatic:
                 raise SyntaxError('esperado \')\'')
             
             self.next()
+
+            if self.current_token[0] == '^': 
+                self.next()
+                self.potencia()
+        else:
+            try:
+                self.constante()
+            except SyntaxError as e:
+                if str(e) == '':
+                    raise SyntaxError('esperado fator')
+                else:
+                    raise SyntaxError(e)
+
+            self.atomico()
+        
+    def atomico(self):
+        try:
+            self.base()
+            self.semantico.constant = True
+        except SyntaxError as e:
+            if str(e) != '':
+                raise SyntaxError(e)
+
+        if self.current_token[0] == '^': 
+            self.next()
+            self.potencia()
+        
+        if self.semantico.constant:
+            self.factory.create_binary_expression('*', self.factory.abs_tree[-2], self.factory.abs_tree[-1])
+            self.semantico.constant = False
+
+    def base(self):
+        if self.current_token[1] == 'FUNCAO':
+            funcao = self.current_token[0]
+            self.next()
+
+            if self.current_token[0] != '(':
+                raise SyntaxError('esperado \'(\'')
+            
+            self.next()
+
+            self.lista_de_parametros()
+
+            self.semantico.check_parameters(funcao, len(self.factory.parameters))
+            self.factory.create_function(funcao)
+
+            if self.current_token[0] != ')':
+                raise SyntaxError('esperado \')\'')
+            
+            self.next()
+        else:
+            self.constante()
+
+    def constante(self):
+        if self.current_token[1] in ('NATURAL', 'RACIONAL'):
+            self.factory.create_constant(self.current_token[0], self.current_token[1])
+            self.next()
+        elif self.current_token[1] == 'VARIAVEL':
+            self.semantico.check_variable(self.current_token[0])
+            self.factory.create_variable(self.current_token[0])
+            self.next()
         elif self.current_token[0] == '(':
             self.next()
 
@@ -184,22 +222,22 @@ class Sintatic:
 
             if self.current_token[0] != ')':
                 raise SyntaxError('esperado \'(\'')
+            
             self.next()
         else:
             raise SyntaxError('')
     
     def potencia(self):
-        if self.current_token[1] != 'CONSTANTE':
-            raise SyntaxError('esperado uma constante')
+        if self.current_token[1] not in ('NATURAL', 'RACIONAL'):
+            raise SyntaxError('esperado uma potencia')
 
-        self.factory.create_constant(self.current_token[0])
+        self.factory.create_constant(self.current_token[0], self.current_token[1])
         ##print(self.abs_tree)
-        size = len(self.factory.abs_tree) - 1
-        self.factory.create_binary_expression('^', self.factory.abs_tree[size-1], self.factory.abs_tree[size])
+        self.factory.create_binary_expression('^', self.factory.abs_tree[-2], self.factory.abs_tree[-1])
         self.next()
     
     def lista_de_parametros(self):
-        if self.current_token[1] != 'CONSTANTE':
+        if self.current_token[1] not in ('NATURAL', 'RACIONAL'):
             raise SyntaxError('esperado uma constante')
         
         self.factory.create_parameter(self.current_token)

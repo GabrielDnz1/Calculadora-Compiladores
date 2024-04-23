@@ -1,7 +1,7 @@
 class Semantic:
 
     def __init__(self):
-        self.buffer = None
+        self.constant = False
         self.variables = []
     
     def check_variable(self, token):
