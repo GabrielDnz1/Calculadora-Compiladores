@@ -1,0 +1,191 @@
+@import url(https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap);
+header {
+  background-color: #000;
+  top: 0;
+  width: 100%;
+}
+.Header_tituloHeader__MJel1 {
+  color: #71d4fe;
+  font-family: Bungee Shade, sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  margin-left: 20px;
+}
+body {
+  background-color: #2f3336;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+Keyboard {
+  bottom: 0;
+}
+.Keyboard_input_e_Base__X2AeF,
+.app_app__oQiW3 {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.Keyboard_input_e_Base__X2AeF {
+  flex-grow: 1;
+  width: 100%;
+}
+textarea {
+  background-color: #0000;
+  color: #fff;
+  flex-grow: 1;
+  font-family: Inter, sans-serif;
+  font-size: 100px;
+  height: 295px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  resize: none;
+  width: 90%;
+}
+.Keyboard_base__81UsU {
+  align-items: center;
+  background: #272b2c;
+  bottom: 0;
+  box-shadow: 0 40px 45px #0006;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 500px;
+  justify-content: center;
+  margin-bottom: 0;
+  width: 100%;
+}
+.Keyboard_base__81UsU .Keyboard_line1__znczD {
+  display: flex;
+  gap: 20px;
+}
+.Keyboard_base__81UsU .Keyboard_line1__znczD span {
+  align-items: center;
+  background: #2f3336;
+  border-radius: 12px;
+  box-shadow: 0 3px 3px #000000b3;
+  color: #71d4fe;
+  display: flex;
+  flex-grow: 1;
+  font-size: 30px;
+  font-weight: 900;
+  height: 50px;
+  justify-content: center;
+  padding: 15px;
+  text-align: center;
+  text-shadow: 0 0 40px #71d4fe, 0 0 80px #71d4fe;
+  width: 90px;
+}
+.Keyboard_base__81UsU .Keyboard_line1__znczD span:hover {
+  cursor: pointer;
+  filter: drop-shadow(0 2px 15px #71d4fe);
+}
+.Keyboard_base__81UsU .Keyboard_line2__xAYr6 {
+  display: flex;
+  gap: 20px;
+}
+.Keyboard_base__81UsU .Keyboard_line2__xAYr6 span {
+  align-items: center;
+  background: #2f3336;
+  border-radius: 12px;
+  box-shadow: 0 3px 3px #000000b3;
+  color: #71d4fe;
+  display: flex;
+  flex-grow: 1;
+  font-size: 30px;
+  font-weight: 900;
+  height: 50px;
+  justify-content: center;
+  padding: 15px;
+  text-align: center;
+  text-shadow: 0 0 40px #71d4fe, 0 0 80px #71d4fe;
+  width: 90px;
+}
+.Keyboard_base__81UsU .Keyboard_line2__xAYr6 span:hover {
+  cursor: pointer;
+  filter: drop-shadow(0 2px 15px #71d4fe);
+}
+.Keyboard_base__81UsU .Keyboard_line3__6-BKg {
+  display: flex;
+  gap: 20px;
+}
+.Keyboard_base__81UsU .Keyboard_line3__6-BKg span {
+  border-radius: 12px;
+  flex-grow: 1;
+  height: 50px;
+  width: 90px;
+}
+.Keyboard_base__81UsU .Keyboard_line3__6-BKg button,
+.Keyboard_base__81UsU .Keyboard_line3__6-BKg span {
+  align-items: center;
+  background: #2f3336;
+  box-shadow: 0 3px 3px #000000b3;
+  color: #71d4fe;
+  display: flex;
+  font-size: 30px;
+  font-weight: 900;
+  justify-content: center;
+  padding: 15px;
+  text-align: center;
+  text-shadow: 0 0 40px #71d4fe, 0 0 80px #71d4fe;
+}
+.Keyboard_base__81UsU .Keyboard_line3__6-BKg button {
+  border: none;
+  border-radius: 12px;
+  height: 80px;
+  width: 150px;
+}
+.Keyboard_base__81UsU .Keyboard_line3__6-BKg span:hover {
+  cursor: pointer;
+  filter: drop-shadow(0 2px 15px #71d4fe);
+}
+.Keyboard_base__81UsU .Keyboard_line4__ABJ7k {
+  display: flex;
+  gap: 20px;
+}
+.Keyboard_base__81UsU .Keyboard_line4__ABJ7k span:hover {
+  cursor: pointer;
+  filter: drop-shadow(0 2px 15px #71d4fe);
+}
+.Keyboard_base__81UsU .Keyboard_line4__ABJ7k button {
+  width: 625px;
+}
+.Keyboard_base__81UsU .Keyboard_line4__ABJ7k .Keyboard_altnum__tH1ON,
+.Keyboard_base__81UsU .Keyboard_line4__ABJ7k button {
+  align-items: center;
+  background: #2f3336;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 3px 3px #000000b3;
+  color: #71d4fe;
+  display: flex;
+  font-size: 20px;
+  font-weight: 700;
+  height: 50px;
+  justify-content: center;
+  padding: 15px;
+  text-align: center;
+  text-shadow: 0 0 10px #71d4fe, 0 0 80px #71d4fe;
+}
+.Keyboard_base__81UsU .Keyboard_line4__ABJ7k .Keyboard_altnum__tH1ON {
+  width: 100px;
+}
+.Solucao_Solucao__\+l14t {
+  align-items: center;
+  background: linear-gradient(#272b2c, #191a1b);
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+}
+p {
+  color: #fff;
+  font-family: Inter, sans-serif;
+  font-size: 50px;
+  font-weight: 800;
+  margin-top: 70px;
+}
+/*# sourceMappingURL=main.f35b78ab.css.map*/

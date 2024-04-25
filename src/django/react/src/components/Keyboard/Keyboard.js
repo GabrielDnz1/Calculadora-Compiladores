@@ -27,6 +27,7 @@ function Keyboard() {
         console.error("Erro ao calcular:", error);
       });
   }
+
   function deletaLetra() {
     setInputValue((prevValue) => prevValue.slice(0, -1));
   }
