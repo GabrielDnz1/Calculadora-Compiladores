@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Keyboard.module.css";
+import axios from "axios";
 
 function Keyboard() {
   const [inputValue, setInputValue] = useState("");
@@ -15,16 +16,23 @@ function Keyboard() {
     };
   }, []);
 
+  function botaoDeEnter() {
+    window.scrollTo(0, document.body.scrollHeight);
+    axios
+      .post("/api/resolve/", { expression: inputValue })
+      .then((response) => {
+        console.log(response.data.result);
+      })
+      .catch((error) => {
+        console.error("Erro ao calcular:", error);
+      });
+  }
   function deletaLetra() {
     setInputValue((prevValue) => prevValue.slice(0, -1));
   }
 
   function MudarKeyboardNumerico() {
     setIsNumericKeyboard((prevValue) => !prevValue);
-  }
-
-  function botaoDeEnter() {
-    window.scrollTo(0, document.body.scrollHeight);
   }
 
   function ClearInput() {
