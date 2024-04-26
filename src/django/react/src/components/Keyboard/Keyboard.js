@@ -18,8 +18,9 @@ function Keyboard() {
 
   function botaoDeEnter() {
     window.scrollTo(0, document.body.scrollHeight);
+
     axios
-      .post("/api/resolve/", { expression: inputValue })
+      .post("http://localhost:8000/api/resolve/", { title: 'expressão', content: inputValue })
       .then((response) => {
         console.log(response.data.result);
       })

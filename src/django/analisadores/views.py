@@ -1,9 +1,10 @@
-from django.http import HttpResponse
+from rest_framework import generics
+from .models import ResolvePost
+from .serializers import ResolvePostSerializer
 from .classes import lexico
 
 # Create your views here.
-def resolve(request):
-    if request.method == 'POST':
-        string = request.POST.get()
-
-        return HttpResponse(string)
+class ResolveView(generics.ListCreateAPIView):
+    queryset = ResolvePost.objects.all()
+    serializer_class = ResolvePostSerializer
+    
