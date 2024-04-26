@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Keyboard.module.css";
-import axios from "axios";
+import conta from "../../calculo.json";
 
 function Keyboard() {
   const [inputValue, setInputValue] = useState("");
   const [isNumericKeyboard, setIsNumericKeyboard] = useState(false);
 
   useEffect(() => {
-    const base = document.querySelector(`.${styles.base}`);
-    base.onclick = function (event) {
+    const handleKeyboardClick = (event) => {
       const target = event.target;
       if (target.tagName === "SPAN") {
         setInputValue((prevValue) => prevValue + target.textContent);
       }
     };
-  }, []);
 
+    const base = document.querySelector(`.${styles.base}`);
+    base.addEventListener("click", handleKeyboardClick);
+
+    return () => {
+      base.removeEventListener("click", handleKeyboardClick);
+    };
+  }, []);
   function botaoDeEnter() {
     window.scrollTo(0, document.body.scrollHeight);
-
-    axios
-      .post("http://localhost:8000/api/resolve/", { title: 'expressão', content: inputValue })
-      .then((response) => {
-        console.log(response.data.result);
-      })
-      .catch((error) => {
-        console.error("Erro ao calcular:", error);
-      });
+    conta["strings"] = inputValue;
   }
 
   function deletaLetra() {
