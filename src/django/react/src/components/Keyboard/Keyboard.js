@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Keyboard.module.css";
+import AxiosInstance from "../Axios";
 import conta from "../../calculo.json";
 
 function Keyboard() {
@@ -21,9 +22,18 @@ function Keyboard() {
       base.removeEventListener("click", handleKeyboardClick);
     };
   }, []);
+
   function botaoDeEnter() {
     window.scrollTo(0, document.body.scrollHeight);
-    conta["strings"] = inputValue;
+    
+    AxiosInstance.post(`api/backend/`, {
+      title: 'expressão',
+      content: inputValue
+    }).then((response) => {
+      console.log(response.data)
+    }).catch((error) => {
+      console.error("Deu herro hein: ", error)
+    });
   }
 
   function deletaLetra() {
