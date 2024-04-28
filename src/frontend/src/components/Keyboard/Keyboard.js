@@ -5,6 +5,8 @@ import AxiosInstance from "../Axios.js";
 function Keyboard() {
   const [inputValue, setInputValue] = useState("");
   const [isNumericKeyboard, setIsNumericKeyboard] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [resultado, setResultado] = useState(null);
 
   useEffect(() => {
     const handleKeyboardClick = (event) => {
@@ -23,16 +25,18 @@ function Keyboard() {
   }, []);
 
   function botaoDeEnter() {
-    window.scrollTo(0, document.body.scrollHeight);
-    
+    setIsPopupOpen(true);
     AxiosInstance.post(`api/backend/`, {
-      title: 'expressão',
-      content: inputValue
-    }).then((response) => {
-      console.log(response.data)
-    }).catch((error) => {
-      console.error("Deu herro hein: ", error)
-    });
+      title: "expressão",
+      content: inputValue,
+    })
+      .then((response) => {
+        console.log(response.data);
+        setResultado(response.data);
+      })
+      .catch((error) => {
+        console.error("Deu herro hein: ", error);
+      });
   }
 
   function deletaLetra() {
@@ -45,6 +49,10 @@ function Keyboard() {
 
   function ClearInput() {
     setInputValue("");
+  }
+
+  function handlePopupClose() {
+    setIsPopupOpen(false);
   }
 
   return (
@@ -158,6 +166,15 @@ function Keyboard() {
           </button>
         </div>
       </div>
+      {isPopupOpen && (
+        <div className={styles.popup}>
+          <h1>SOLUÇÃO</h1>
+          <h1 className={styles.valordoinput}>{resultado}</h1>
+          <a className={styles.close} href="#" onClick={handlePopupClose}>
+            CLOSE
+          </a>
+        </div>
+      )}
     </div>
   );
 }
