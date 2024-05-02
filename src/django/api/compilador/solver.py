@@ -9,6 +9,7 @@ class Solver:
     def simplify(self, expression):
         if expression.get_type() == Exp.BINARY_OP:
             op = expression.get_operation()
+            #print(f'{expression.e1.get_type()}{op}{expression.e2.get_type()}')
 
             # Simplifica os termos
             expression.e1 = self.simplify(expression.e1)

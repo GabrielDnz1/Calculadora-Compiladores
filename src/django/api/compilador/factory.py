@@ -70,6 +70,7 @@ class Factory:
     def __init__(self):
         self.abs_tree = []
         self.parameters = []
+        self.constants = 0
 
     def create_binary_expression(self, operation, e1, e2):
         op = BinaryOperation(operation, e1, e2)
@@ -89,7 +90,7 @@ class Factory:
     def create_constant(self, constant, constant_type):
         constant  = Constant(constant, constant_type)
         self.abs_tree.append(constant)
-    
+
     def create_function(self, func):
         function = Function(func, self.parameters.copy())
         self.abs_tree.append(function)
@@ -98,3 +99,9 @@ class Factory:
     def create_parameter(self, parameter):
         parameter = Constant(parameter[0], parameter[1])
         self.parameters.append(parameter)
+    
+    def reduce_constants(self):
+        for i in range(self.constants):
+            self.create_binary_expression('*', self.abs_tree[-2], self.abs_tree[-1])
+        
+        self.constants = 0

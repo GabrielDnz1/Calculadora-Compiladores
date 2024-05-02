@@ -22,10 +22,10 @@ def getResponse(data):
     print('Analisando o sintatico...')
     result = analisador_sintatico.check(tokens)
 
-    if result:
+    if result == True:
         print('Calculando...')
         solution = solucionador.simplify(analisador_sintatico.factory.abs_tree[0])
 
         return str(solution)
-    
-    return 'rolou algo ai hein'
+
+    return result

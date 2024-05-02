@@ -10,7 +10,6 @@ class Sintatic:
         self.semantico = semantico
 
     def next(self):
-        ##print(self.current_token[0])
         self.stack_pos += 1
         self.current_token = self.tokens[self.stack_pos] if self.stack_pos < len(self.tokens) else (None, None)
 
@@ -23,12 +22,10 @@ class Sintatic:
         except SyntaxError as e:
             if self.stack_pos == len(self.tokens):
                 self.stack_pos -= 1
-            print(f'[ERRO] Erro sintático, {e}, encontrado: \'{self.tokens[self.stack_pos][0]}\'')
-            return False
+            return f'[ERRO] Erro sintático, {e}, encontrado: \'{self.tokens[self.stack_pos][0]}\''
         
         if self.stack_pos != len(self.tokens):
-            print(f'[ERRO] Erro sintático, encontrado: \'{self.tokens[self.stack_pos][0]}\'')
-            return False
+            return f'[ERRO] Erro sintático, encontrado: \'{self.tokens[self.stack_pos][0]}\''
     
         return True
     
@@ -50,11 +47,11 @@ class Sintatic:
     termo -> fator termo'
     termo' -> operador_multiplicativo fator termo' | e
 
-    fator -> funcao(lista_de_parametros) ^ potência | constante atomico
+    fator -> constante lista_de_constantes | funcao(lista_de_parametros) expoente
 
-    atomico -> base ^ potência | e
+    lista_de_constantes -> constante lista_de_constantes expoente | funcao(lista_de_parametros) expoente | e
 
-    base -> funcao(lista_de_parametros) | constante | e
+    expoente -> ^ potência | e
 
     constante -> num | variavel | (expressão)
 
@@ -75,7 +72,10 @@ class Sintatic:
 
             self.expressao()
 
-            self.semantico.check_equation()
+            try:
+                self.semantico.check_equation()
+            except Exception as e:
+                raise SyntaxError(e)
 
             self.factory.create_binary_expression('=', self.factory.abs_tree[-2], self.factory.abs_tree[-1])
 
@@ -147,17 +147,18 @@ class Sintatic:
 
             self.lista_de_parametros()
 
-            self.semantico.check_parameters(funcao, len(self.factory.parameters))
+            try:
+                self.semantico.check_parameters(funcao, len(self.factory.parameters))
+            except Exception as e:
+                raise SyntaxError(e)
+            
             self.factory.create_function(funcao)
 
             if self.current_token[0] != ')':
                 raise SyntaxError('esperado \')\'')
             
             self.next()
-
-            if self.current_token[0] == '^': 
-                self.next()
-                self.potencia()
+            self.expoente()
         else:
             try:
                 self.constante()
@@ -167,25 +168,14 @@ class Sintatic:
                 else:
                     raise SyntaxError(e)
 
-            self.atomico()
-        
-    def atomico(self):
-        try:
-            self.base()
-            self.semantico.constant = True
-        except SyntaxError as e:
-            if str(e) != '':
-                raise SyntaxError(e)
-
-        if self.current_token[0] == '^': 
+            self.lista_de_constantes()
+    
+    def expoente(self):
+        if self.current_token[0] == '^':
             self.next()
             self.potencia()
-        
-        if self.semantico.constant:
-            self.factory.create_binary_expression('*', self.factory.abs_tree[-2], self.factory.abs_tree[-1])
-            self.semantico.constant = False
 
-    def base(self):
+    def lista_de_constantes(self):
         if self.current_token[1] == 'FUNCAO':
             funcao = self.current_token[0]
             self.next()
@@ -197,22 +187,39 @@ class Sintatic:
 
             self.lista_de_parametros()
 
-            self.semantico.check_parameters(funcao, len(self.factory.parameters))
+            try:
+                self.semantico.check_parameters(funcao, len(self.factory.parameters))
+            except Exception as e:
+                raise SyntaxError(e)
+            
             self.factory.create_function(funcao)
 
             if self.current_token[0] != ')':
                 raise SyntaxError('esperado \')\'')
             
             self.next()
+            self.expoente()
         else:
-            self.constante()
+            try:
+                self.constante()
+                self.lista_de_constantes()
+                self.expoente()
+                self.factory.create_binary_expression('*', self.factory.abs_tree[-2], self.factory.abs_tree[-1])
+            except SyntaxError as e:
+                if str(e) != '':
+                    raise SyntaxError(e)
+            
 
     def constante(self):
         if self.current_token[1] in ('NATURAL', 'RACIONAL'):
             self.factory.create_constant(self.current_token[0], self.current_token[1])
             self.next()
         elif self.current_token[1] == 'VARIAVEL':
-            self.semantico.check_variable(self.current_token[0])
+            try:
+                self.semantico.check_variable(self.current_token[0])
+            except Exception as e:
+                raise SyntaxError(e)
+            
             self.factory.create_variable(self.current_token[0])
             self.next()
         elif self.current_token[0] == '(':
