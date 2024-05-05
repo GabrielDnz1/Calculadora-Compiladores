@@ -20,7 +20,6 @@ class ResolveView(viewsets.ViewSet):
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(): 
-            serializer.save()
             return Response(core.getResponse(serializer.data))
         else: 
             return Response(serializer.errors, status=400)

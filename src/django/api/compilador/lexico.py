@@ -21,7 +21,7 @@ letters = {'alpha', 'beta', 'gamma', 'delta', 'elipson', 'zeta', 'eta', 'theta',
                   'lambda', 'mu', 'nu', 'xi', 'omikron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', 'phi', 
                   'chi', 'psi', 'omega'}
 
-functions = {'sin', 'cos', 'tan', 'ln', 'log'}
+functions = {'sin', 'cos', 'tg', 'ln', 'log', 'lim'}
 
 class Lexic:
     def __init__(self):
@@ -40,11 +40,14 @@ class Lexic:
             elif char in {'+', '-', '/', '*', '^', '='}:
                 self.symbol += char
                 self.current_state = 'q6'
-            elif char in {' ', '\t', '\0'}:
+            elif char in {' ', '\t', '\0', '\n'}:
                 pass
             elif char in {'(', ')', ','}:
                 self.symbol += char
                 self.current_state = 'q7'
+            elif char in {"'", '∫', '√'}:
+                self.symbol += char
+                self.current_state = 'q8'
             else:
                 self.current_state = 'invalid'
         elif self.current_state == 'q1':
@@ -76,22 +79,24 @@ class Lexic:
                 self.reset('VARIAVEL')
                 self.transition(char)
         elif self.current_state == 'q5':
-            if char.isalpha():
+            if self.symbol in letters:
+                self.reset('VARIAVEL')
+                self.transition(char)
+            elif self.symbol in functions:
+                self.reset('FUNCAO')
+                self.transition(char)
+            elif char.isalpha():
                 self.symbol += char
             else:
-                if self.symbol in letters:
-                    self.reset('VARIAVEL')
-                    self.transition(char)
-                elif self.symbol in functions:
-                    self.reset('FUNCAO')
-                    self.transition(char)
-                else:
-                    self.current_state = 'invalid'
+                self.current_state = 'invalid'
         elif self.current_state == 'q6':
             self.reset('OPERADOR')
             self.transition(char)
         elif self.current_state == 'q7':
             self.reset('DELIMITADOR')
+            self.transition(char)
+        elif self.current_state == 'q8':
+            self.reset('FUNCAO')
             self.transition(char)
 
     def reset(self, classifier):
@@ -106,9 +111,8 @@ class Lexic:
             self.transition(char)
 
             if self.current_state == 'invalid':
-                raise Exception(f'Caractere \'{char}\' inválido!')
+                raise Exception(f'Caractere \'{char if self.symbol == '' else self.symbol}\' inválido!')
 
+        
         self.symbols_table.append(('EOF', 'EOF'))
         return self.symbols_table
-        ##for tuple in self.symbols_table:
-            ##print("{:<5} {:<10}".format(*tuple))

@@ -97,7 +97,6 @@ class Factory:
         self.parameters.clear()
     
     def create_parameter(self, parameter):
-        parameter = Constant(parameter[0], parameter[1])
         self.parameters.append(parameter)
     
     def reduce_constants(self):

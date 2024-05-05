@@ -4,7 +4,7 @@ import AxiosInstance from "../Axios.js";
 
 function Keyboard() {
   const [inputValue, setInputValue] = useState("");
-  const [isNumericKeyboard, setIsNumericKeyboard] = useState(false);
+  const [isNumericKeyboard, setIsNumericKeyboard] = useState(true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [resultado, setResultado] = useState(null);
   const [isShiftPressed, setIsShiftPressed] = useState(false);
@@ -69,125 +69,137 @@ function Keyboard() {
     setIsPopupOpen(false);
   }
 
+  function handleInputChange(event){
+    setInputValue(event.target.value)
+  }
+
+  const calculusKeyboard = 
+
+  <div className={`${styles.keyboard} ${styles.calculus}`}>
+    <div className={`${styles.part}`}>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"+"}</span>
+        <span className={`${styles.tecla}`}>{"-"}</span>
+        <span className={`${styles.tecla}`}>{"*"}</span>
+        <span className={`${styles.tecla}`}>{"/"}</span>
+        <span className={`${styles.tecla}`}>{"="}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"x"}</span>
+        <span className={`${styles.tecla}`}>{"7"}</span>
+        <span className={`${styles.tecla}`}>{"8"}</span>
+        <span className={`${styles.tecla}`}>{"9"}</span>
+        <span className={`${styles.tecla}`}>{"("}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"y"}</span>
+        <span className={`${styles.tecla}`}>{"4"}</span>
+        <span className={`${styles.tecla}`}>{"5"}</span>
+        <span className={`${styles.tecla}`}>{"6"}</span>
+        <span className={`${styles.tecla}`}>{")"}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"z"}</span>
+        <span className={`${styles.tecla}`}>{"1"}</span>
+        <span className={`${styles.tecla}`}>{"2"}</span>
+        <span className={`${styles.tecla}`}>{"3"}</span>
+        <span className={`${styles.tecla}`}>{"^"}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <button className={styles.altnum} onClick={MudarKeyboardNumerico}>{"ABC"}</button>
+        <span className={`${styles.tecla}`}>{","}</span>
+        <span className={`${styles.tecla}`}>{"0"}</span>
+        <span className={`${styles.tecla}`}>{"."}</span>
+        <button className={styles.enter} onClick={botaoDeEnter}>←</button>
+      </div>
+    </div>
+    <div className={`${styles.part}`}>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"sin"}</span>
+        <span className={`${styles.tecla}`}>{"ln"}</span>
+        <span className={`${styles.tecla}`}>{"|"}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"cos"}</span>
+        <span className={`${styles.tecla}`}>{"log"}</span>
+        <span className={`${styles.tecla}`}>{"lim"}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"tg"}</span>
+        <span className={`${styles.tecla}`}>{"e"}</span>
+        <span className={`${styles.tecla}`}>{"'"}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"π"}</span>
+        <span className={`${styles.tecla}`}>{"√"}</span>
+        <span className={`${styles.tecla}`}>{"∫"}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <button className={styles.delete} onClick={deletaLetra}>Del</button>
+        <button className={styles.spacebar} onClick={ClearInput}>Clear</button>
+      </div>
+    </div>
+  </div>
+
+  const alphabeticKeyboard =
+
+  <div className={`${styles.keyboard} ${styles.alpha}`}>
+    <div className={`${styles.part}`}>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "Q" : "q"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "W" : "w"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "E" : "e"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "R" : "r"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "T" : "t"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "Y" : "y"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "U" : "u"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "I" : "i"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "O" : "o"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "P" : "p"}</span>
+      </div>
+      <div className={`${styles.line}`}>
+      <span className={`${styles.tecla}`}>{isShiftPressed ? "A" : "a"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "S" : "s"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "D" : "d"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "F" : "f"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "G" : "g"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "H" : "h"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "J" : "j"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "K" : "k"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "L" : "l"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "Ç" : "ç"}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <button className={`${styles.tecla_shift} ${isShiftPressed ? styles.shiftPressed : ""}`} onClick={handleShiftPress} id="shiftButton">
+          {"⇧"}
+        </button>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "Z" : "z"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "X" : "x"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "C" : "c"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "V" : "v"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "B" : "b"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "N" : "n"}</span>
+        <span className={`${styles.tecla}`}>{isShiftPressed ? "M" : "m"}</span>
+        <button className={styles.enter} onClick={botaoDeEnter}>←</button>
+      </div>
+      <div className={`${styles.line}`}>
+        <button className={styles.altnum} onClick={MudarKeyboardNumerico}>{"123"}</button>
+        <button className={styles.delete} onClick={deletaLetra}>Del</button>
+        <button className={styles.spacebar} onClick={ClearInput}>Clear</button>
+      </div>
+    </div>
+  </div>
+
   return (
     <div className={styles.input_e_Base}>
       <textarea
         className={styles.Input}
         id="resposta"
         value={inputValue}
-        readOnly
+        onChange={handleInputChange}
       ></textarea>
-      <div className={styles.base}>
-        <div className={styles.line1}>
-          <span className={`${styles.tecla} ${styles.tecla_Q}`}>
-            {isNumericKeyboard ? "1" : isShiftPressed ? "Q" : "q"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_W}`}>
-            {isNumericKeyboard ? "2" : isShiftPressed ? "W" : "w"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_E}`}>
-            {isNumericKeyboard ? "3" : isShiftPressed ? "E" : "e"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_R}`}>
-            {isNumericKeyboard ? "4" : isShiftPressed ? "R" : "r"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_T}`}>
-            {isNumericKeyboard ? "5" : isShiftPressed ? "T" : "t"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_Y}`}>
-            {isNumericKeyboard ? "6" : isShiftPressed ? "Y" : "y"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_U}`}>
-            {isNumericKeyboard ? "7" : isShiftPressed ? "U" : "u"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_I}`}>
-            {isNumericKeyboard ? "8" : isShiftPressed ? "I" : "i"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_O}`}>
-            {isNumericKeyboard ? "9" : isShiftPressed ? "O" : "o"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_P}`}>
-            {isNumericKeyboard ? "0" : isShiftPressed ? "P" : "p"}
-          </span>
-        </div>
-        <div className={styles.line2}>
-          <span className={`${styles.tecla} ${styles.tecla_A}`}>
-            {isNumericKeyboard ? "ln" : isShiftPressed ? "A" : "a"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_S}`}>
-            {isNumericKeyboard ? "sin" : isShiftPressed ? "S" : "s"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_D}`}>
-            {isNumericKeyboard ? "cos" : isShiftPressed ? "D" : "d"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_F}`}>
-            {isNumericKeyboard ? "tg" : isShiftPressed ? "F" : "f"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_G}`}>
-            {isNumericKeyboard ? "√" : isShiftPressed ? "G" : "g"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_H}`}>
-            {isNumericKeyboard ? "(" : isShiftPressed ? "H" : "h"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_J}`}>
-            {isNumericKeyboard ? ")" : isShiftPressed ? "J" : "j"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_K}`}>
-            {isNumericKeyboard ? "{" : isShiftPressed ? "K" : "k"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_L}`}>
-            {isNumericKeyboard ? "}" : isShiftPressed ? "L" : "l"}
-          </span>
-        </div>
-        <div className={styles.line3}>
-          <button
-            className={`${styles.tecla_shift} ${
-              isShiftPressed ? styles.shiftPressed : ""
-            }`}
-            onClick={handleShiftPress}
-            id="shiftButton"
-          >
-            {isNumericKeyboard ? "⇧" : "⇧"}
-          </button>
-          <span className={`${styles.tecla} ${styles.tecla_PI}`}>
-            {isNumericKeyboard ? "π" : "π"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_Z}`}>
-            {isNumericKeyboard ? "+" : isShiftPressed ? "Z" : "z"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_X}`}>
-            {isNumericKeyboard ? "-" : isShiftPressed ? "X" : "x"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_C}`}>
-            {isNumericKeyboard ? "x" : isShiftPressed ? "C" : "c"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_V}`}>
-            {isNumericKeyboard ? "÷" : isShiftPressed ? "V" : "v"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_B}`}>
-            {isNumericKeyboard ? "," : isShiftPressed ? "B" : "b"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_N}`}>
-            {isNumericKeyboard ? "^" : isShiftPressed ? "N" : "n"}
-          </span>
-          <span className={`${styles.tecla} ${styles.tecla_M}`}>
-            {isNumericKeyboard ? "=" : isShiftPressed ? "M" : "m"}
-          </span>
-          <button className={styles.Delete} onClick={deletaLetra}>
-            Del
-          </button>
-        </div>
-        <div className={styles.line4}>
-          <button className={styles.altnum} onClick={MudarKeyboardNumerico}>
-            {isNumericKeyboard ? "ABC" : "123"}
-          </button>
-          <button className={styles.spacebar} onClick={ClearInput}>
-            Clear
-          </button>
-          <button className={styles.enter} onClick={botaoDeEnter}>
-            Solve
-          </button>
-        </div>
+      <div className={styles.base}>  
+        {isNumericKeyboard ? calculusKeyboard: alphabeticKeyboard}
       </div>
       {isPopupOpen && (
         <div className={styles.popup}>

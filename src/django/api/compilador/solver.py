@@ -53,13 +53,12 @@ class Solver:
         elif expression.get_type() == Exp.FUNCTION:
             func = expression.get_function()
             parameters = expression.get_parameters()
-            ##print(parameters)
 
             for i in range(len(parameters)):
                 parameters[i] = self.simplify(parameters[i])
 
             if func == 'log':
-                return log(parameters[0], parameters[1])
+                return log(parameters[1], parameters[0])
             elif func == 'ln':
                 return log(parameters[0])
             elif func == 'sin':
@@ -68,5 +67,7 @@ class Solver:
                 return cos(parameters[0])
             elif func == 'tan':
                 return tan(parameters[0])
+            elif func == '√':
+                return parameters[0]**(1/2)
 
         return expression
