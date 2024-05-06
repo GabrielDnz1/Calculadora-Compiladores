@@ -1,26 +1,3 @@
-"""
-[Lexico]
-
-Variáveis: apenas uma letra
-
-Naturais: números naturais
-
-Racionais: números racionais
-
-Operadores: + - * / ^ =
-
-Letra grega: alpha, beta, gamma, delta, elipson, zeta, eta, theta, iota, kappa, lambda, mu, nu, xi, omikron, pi, rho, sigma, tau, upsilon, phi, chi, psi, omega
-
-Funções: log, cos, sen, tg
-
-Delimitadores: ( ) ,
-
-"""
-
-letters = {'alpha', 'beta', 'gamma', 'delta', 'elipson', 'zeta', 'eta', 'theta', 'iota', 'kappa', 
-                  'lambda', 'mu', 'nu', 'xi', 'omikron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', 'phi', 
-                  'chi', 'psi', 'omega'}
-
 functions = {'sin', 'cos', 'tg', 'ln', 'log', 'lim'}
 
 class Lexic:
@@ -79,10 +56,7 @@ class Lexic:
                 self.reset('VARIAVEL')
                 self.transition(char)
         elif self.current_state == 'q5':
-            if self.symbol in letters:
-                self.reset('VARIAVEL')
-                self.transition(char)
-            elif self.symbol in functions:
+            if self.symbol in functions:
                 self.reset('FUNCAO')
                 self.transition(char)
             elif char.isalpha():

@@ -7,11 +7,13 @@ class Semantic:
         self.variables = []
     
     def check_variable(self, token):
-        if token not in self.variables:
-            self.variables.append(token)
+        if token not in {'π', 'e'}:
+        
+            if token not in self.variables:
+                self.variables.append(token)
 
-        if len(self.variables) > 1:
-            raise Exception('Mais de uma variável foi encontrada')
+            if len(self.variables) > 1:
+                raise Exception('Mais de uma variável foi encontrada')
     
     def check_parameters(self, function, parameters):
         size = len(parameters)
@@ -20,30 +22,29 @@ class Semantic:
             if size != 2:
                 raise Exception('A função \'log\' precisa de dois parâmetros')
             
-            if not self.check_parameter(parameters[0], Exp.CONSTANT) or not self.check_parameter(parameters[1], Exp.CONSTANT):
+            if not (self.check_parameter(parameters[0], Exp.CONSTANT) or self.check_parameter(parameters[0], Exp.VALUE)) or not (self.check_parameter(parameters[1], Exp.CONSTANT) or self.check_parameter(parameters[1], Exp.VALUE)):
                 raise Exception('A função \'log\' só aceita constantes')
         elif function in {'sin', 'cos', 'tan', 'ln'}:
             if size != 1:
                 raise Exception(f'A função \'{function}\' precisa de um parâmetro')
 
-            if not self.check_parameter(parameters[0], Exp.CONSTANT):
+            if not (self.check_parameter(parameters[0], Exp.CONSTANT) or self.check_parameter(parameters[0], Exp.VALUE)):
                 raise Exception(f'A função \'{function}\' só aceita constante')
         elif function == '√':
             if size != 1:
                 raise Exception('A função \'raíz quadrada\' precisa de um parâmetro')
-        elif function == '\'':
-            '''
+        elif function == "'":
             if size != 2:
                 raise Exception('A função \'derivada\' precisa de dois parâmetros')
             
             if not self.check_parameter(parameters[1], Exp.VARIABLE):
                 raise Exception('A função \'derivada\' precisa saber qual vai ser a variavel derivada')
-            '''
+        elif function == '∫':
+            if size != 2 and size != 4:
+                raise Exception('A função \'integral\' precisa de dois ou quatro parâmetros')
+        elif function == 'lim':
             if size >= 0:
-                raise Exception('Por enquanto a função \'derivada\' está inutilizável')
-        elif function == '∫' or function == 'lim':
-            if size >= 0:
-                raise Exception('Por enquanto a função \'integral\' está inutilizável')
+                raise Exception('Por enquanto a função está inutilizável')
         
     def check_parameter(self, parameter, type):
         if parameter.get_type() == type:

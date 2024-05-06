@@ -1,5 +1,4 @@
 from sympy import *
-from . import factory as factory
 from .exp_enum import Exp
 
 class Solver:
@@ -9,9 +8,7 @@ class Solver:
     def simplify(self, expression):
         if expression.get_type() == Exp.BINARY_OP:
             op = expression.get_operation()
-            #print(f'{expression.e1.get_type()}{op}{expression.e2.get_type()}')
 
-            # Simplifica os termos
             expression.e1 = self.simplify(expression.e1)
             expression.e2 = self.simplify(expression.e2)
 
@@ -30,7 +27,6 @@ class Solver:
         elif expression.get_type() == Exp.UNARY_OP:
             op = expression.get_operation()
 
-            # Simplifica o termo
             expression.expression = self.simplify(expression.expression)
 
             if op == '-':
@@ -38,6 +34,15 @@ class Solver:
             
         elif expression.get_type() == Exp.CONSTANT:
             return expression.get_value()
+        elif expression.get_type() == Exp.VALUE:
+            value = expression.get_value()
+
+            if value == 'π':
+                return pi
+            elif value == 'e':
+                return E
+            
+            return 0
         elif expression.get_type() == Exp.VARIABLE:
             var = symbols(expression.get_base())
             coefficient = expression.get_coefficient().get_value()
@@ -69,5 +74,15 @@ class Solver:
                 return tan(parameters[0])
             elif func == '√':
                 return parameters[0]**(1/2)
+            elif func == 'lim':
+                pass
+            elif func == "'":
+                return diff(parameters[0], parameters[1])
+            elif func == '∫':
+                print(len(parameters))
+                if len(parameters) == 2:
+                    return integrate(parameters[0], parameters[1])
+                
+                return integrate(parameters[0], (parameters[1], parameters[2], parameters[3]))
 
         return expression

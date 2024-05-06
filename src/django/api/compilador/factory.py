@@ -30,6 +30,14 @@ class Constant(Expression):
             return int(self.value)
         else:
             return float(self.value)
+
+class Value(Expression):
+    def __init__(self, value):
+        super().__init__(Exp.VALUE)
+        self.value = value
+
+    def get_value(self):
+        return self.value
     
 class Variable(Expression):
     def __init__(self, base, exp, coefficient):
@@ -84,7 +92,11 @@ class Factory:
         self.abs_tree.append(op)
     
     def create_variable(self, variable):
-        variable = Variable(variable, Constant(1, 'NATURAL'), Constant(1, 'NATURAL'))
+        if variable not in {'π', 'e'}:
+            variable = Variable(variable, Constant(1, 'NATURAL'), Constant(1, 'NATURAL'))
+        else:
+            variable = Value(variable)
+        
         self.abs_tree.append(variable)
     
     def create_constant(self, constant, constant_type):

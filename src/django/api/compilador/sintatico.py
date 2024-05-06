@@ -28,39 +28,6 @@ class Sintatic:
             return f'[ERRO] Erro sintático, encontrado: \'{self.tokens[self.stack_pos][0]}\''
     
         return True
-    
-    """
-    [Sintático]
-
-    texto -> sistema | equacao | expressão
-
-    sistema -> { lista_de_equações }
-
-    lista_de_equações -> equacao lista_de_equações'
-    lista_de_equações' -> , equacao lista_de_equações
-
-    equacao -> expressão = expressão
-
-    expressão -> termo expressão'| sinal termo expressão'
-    expressão' -> operador_aditivo termo expressão' | e
-
-    termo -> fator termo'
-    termo' -> operador_multiplicativo fator termo' | e
-
-    fator -> constante lista_de_constantes expoente
-
-    lista_de_constantes -> constante lista_de_constantes expoente | e
-
-    expoente -> ^ potência | e
-
-    constante -> funcao(lista_de_parametros) | num | variavel | (expressão)
-
-    potência -> num 
-
-    lista_de_parametros -> expressão lista_de_parametros'
-    lista_de_parametros' -> , expressão lista_de_parametros' | e
-
-    """
 
     def parser(self):
         self.expressao()
@@ -171,6 +138,9 @@ class Sintatic:
             
             self.next()
 
+            _copy = self.factory.parameters.copy()
+            self.factory.parameters.clear()
+
             self.lista_de_parametros()
 
             if self.current_token[0] != ')':
@@ -182,6 +152,8 @@ class Sintatic:
                 raise SyntaxError(e)
             
             self.factory.create_function(funcao)
+            
+            self.factory.parameters = _copy
             
             self.next()
         elif self.current_token[1] in ('NATURAL', 'RACIONAL'):
@@ -212,26 +184,19 @@ class Sintatic:
             raise SyntaxError('esperado uma potencia')
 
         self.factory.create_constant(self.current_token[0], self.current_token[1])
-        ##print(self.abs_tree)
         self.factory.create_binary_expression('^', self.factory.abs_tree[-2], self.factory.abs_tree[-1])
         self.next()
     
     def lista_de_parametros(self):
         _copy1 = self.factory.abs_tree.copy()
         self.factory.abs_tree.clear()
-        self.factory.parameters.clear()
 
         self.expressao()
         
         self.factory.create_parameter(self.factory.abs_tree[0])
 
         self.factory.abs_tree = _copy1.copy()
-        _copy2 = self.factory.parameters.copy()
 
         if self.current_token[0] == ',':
             self.next()
-
             self.lista_de_parametros()
-            _copy2.append(self.factory.parameters[0])
-
-        self.factory.parameters = _copy2.copy()

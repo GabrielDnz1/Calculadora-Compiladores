@@ -54,15 +54,6 @@ function Keyboard() {
 
   function handleShiftPress() {
     setIsShiftPressed((prevValue) => !prevValue);
-    var botao = document.getElementById("shiftButton");
-    var cordeBackground1 = "#2f3336";
-    var cordeBackground2 = "#FFFFFF";
-
-    if (botao.style.backgroundColor == cordeBackground1) {
-      botao.style.backgroundColor = cordeBackground2;
-    } else {
-      botao.style.backgroundColor = cordeBackground1;
-    }
   }
 
   function handlePopupClose() {
@@ -117,22 +108,22 @@ function Keyboard() {
       <div className={`${styles.line}`}>
         <span className={`${styles.tecla}`}>{"sin"}</span>
         <span className={`${styles.tecla}`}>{"ln"}</span>
-        <span className={`${styles.tecla}`}>{"|"}</span>
+        <span className={`${styles.tecla}`}>{"lim"}</span>
       </div>
       <div className={`${styles.line}`}>
         <span className={`${styles.tecla}`}>{"cos"}</span>
         <span className={`${styles.tecla}`}>{"log"}</span>
-        <span className={`${styles.tecla}`}>{"lim"}</span>
-      </div>
-      <div className={`${styles.line}`}>
-        <span className={`${styles.tecla}`}>{"tg"}</span>
-        <span className={`${styles.tecla}`}>{"e"}</span>
         <span className={`${styles.tecla}`}>{"'"}</span>
       </div>
       <div className={`${styles.line}`}>
-        <span className={`${styles.tecla}`}>{"π"}</span>
+        <span className={`${styles.tecla}`}>{"tg"}</span>
         <span className={`${styles.tecla}`}>{"√"}</span>
         <span className={`${styles.tecla}`}>{"∫"}</span>
+      </div>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"π"}</span>
+        <span className={`${styles.tecla}`}>{"e"}</span>
+        <span className={`${styles.tecla}`}>{"Δ"}</span>
       </div>
       <div className={`${styles.line}`}>
         <button className={styles.delete} onClick={deletaLetra}>Del</button>
@@ -145,6 +136,18 @@ function Keyboard() {
 
   <div className={`${styles.keyboard} ${styles.alpha}`}>
     <div className={`${styles.part}`}>
+      <div className={`${styles.line}`}>
+        <span className={`${styles.tecla}`}>{"α"}</span>
+        <span className={`${styles.tecla}`}>{"β"}</span>
+        <span className={`${styles.tecla}`}>{"γ"}</span>
+        <span className={`${styles.tecla}`}>{"Δ"}</span>
+        <span className={`${styles.tecla}`}>{"θ"}</span>
+        <span className={`${styles.tecla}`}>{"λ"}</span>
+        <span className={`${styles.tecla}`}>{"σ"}</span>
+        <span className={`${styles.tecla}`}>{"τ"}</span>
+        <span className={`${styles.tecla}`}>{"φ"}</span>
+        <span className={`${styles.tecla}`}>{"ω"}</span>
+      </div>
       <div className={`${styles.line}`}>
         <span className={`${styles.tecla}`}>{isShiftPressed ? "Q" : "q"}</span>
         <span className={`${styles.tecla}`}>{isShiftPressed ? "W" : "w"}</span>
