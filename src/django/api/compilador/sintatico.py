@@ -22,10 +22,10 @@ class Sintatic:
         except SyntaxError as e:
             if self.stack_pos == len(self.tokens):
                 self.stack_pos -= 1
-            return f'[ERRO] Erro sintático, {e}, encontrado: \'{self.tokens[self.stack_pos][0]}\''
+            return str(e)
         
         if self.stack_pos != len(self.tokens):
-            return f'[ERRO] Erro sintático, encontrado: \'{self.tokens[self.stack_pos][0]}\''
+            return f'Erro sintático, encontrado: \'{self.tokens[self.stack_pos][0]}\''
     
         return True
 
@@ -81,7 +81,7 @@ class Sintatic:
                 self.termo()
             except SyntaxError as e:
                 if str(e) == '':
-                    raise SyntaxError('esperado fator')
+                    raise SyntaxError(f'Erro sintático, esperado fator, encontrado: \'{self.tokens[self.stack_pos][0]}\'')
                 else:
                     raise SyntaxError(e)
             
@@ -94,7 +94,7 @@ class Sintatic:
                 self.termo()
             except SyntaxError as e:
                 if str(e) == '':
-                    raise SyntaxError('esperado fator')
+                    raise SyntaxError(f'Erro sintático, esperado fator, encontrado: \'{self.tokens[self.stack_pos][0]}\'')
                 else:
                     raise SyntaxError(e)
             
@@ -105,7 +105,7 @@ class Sintatic:
             self.constante()
         except SyntaxError as e:
             if str(e) == '':
-                raise SyntaxError('esperado fator')
+                raise SyntaxError(f'Erro sintático, esperado fator, encontrado: \'{self.tokens[self.stack_pos][0]}\'')
             else:
                 raise SyntaxError(e)
 
@@ -134,7 +134,7 @@ class Sintatic:
             self.next()
 
             if self.current_token[0] != '(':
-                raise SyntaxError('esperado \'(\'')
+                raise SyntaxError(f'Erro sintático, esperado \'(\', encontrado: \'{self.tokens[self.stack_pos][0]}\'')
             
             self.next()
 
@@ -144,7 +144,7 @@ class Sintatic:
             self.lista_de_parametros()
 
             if self.current_token[0] != ')':
-                raise SyntaxError('esperado \')\'')
+                raise SyntaxError(f'Erro sintático, esperado \')\', encontrado: \'{self.tokens[self.stack_pos][0]}\'')
             
             try:
                 self.semantico.check_parameters(funcao, self.factory.parameters)
@@ -173,7 +173,7 @@ class Sintatic:
             self.expressao()
 
             if self.current_token[0] != ')':
-                raise SyntaxError('esperado \'(\'')
+                raise SyntaxError(f'Erro sintático, esperado \')\', encontrado: \'{self.tokens[self.stack_pos][0]}\'')
             
             self.next()
         else:
@@ -181,7 +181,7 @@ class Sintatic:
     
     def potencia(self):
         if self.current_token[1] not in ('NATURAL', 'RACIONAL'):
-            raise SyntaxError('esperado uma potencia')
+            raise SyntaxError(f'Erro sintático, esperado potência, encontrado: \'{self.tokens[self.stack_pos][0]}\'')
 
         self.factory.create_constant(self.current_token[0], self.current_token[1])
         self.factory.create_binary_expression('^', self.factory.abs_tree[-2], self.factory.abs_tree[-1])

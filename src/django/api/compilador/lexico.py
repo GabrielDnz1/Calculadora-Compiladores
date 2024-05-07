@@ -85,7 +85,7 @@ class Lexic:
             self.transition(char)
 
             if self.current_state == 'invalid':
-                raise Exception(f'Caractere \'{char if self.symbol == '' else self.symbol}\' inválido!')
+                raise Exception(f'Erro Léxico, caractere \'{char if self.symbol == '' else self.symbol}\' inválido!')
 
         
         self.symbols_table.append(('EOF', 'EOF'))
