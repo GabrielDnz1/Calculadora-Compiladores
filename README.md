@@ -1,14 +1,14 @@
-### Projeto React + Django
+<h1>Projeto React + Django</h1>
 Este é um projeto que combina uma aplicação frontend em React com um backend em Django.
 
-### Pré-requisitos
-Certifique-se de ter o Node.js e o Python instalados em sua máquina.
+<h1>Pré-requisitos</h1>
+<p>Certifique-se de ter o Node.js e o Python instalados em sua máquina.</p>
 
 Node.js (v12.x ou superior)
 Python (v3.x)
 
-### Instalação
-clone o repositório para o seu ambiente local
+<h1>Instalação</h1> 
+<p>clone o repositório para o seu ambiente local</p>
 
 git clone https://github.com/GabrielDnz1/Calculadora-Compiladores.git
 
@@ -29,7 +29,7 @@ Instale as dependências para o Back-end
 
 pip install -r requirements.txt
 
-### Construção
+<h1>Construção</h1>
 
 Para a contrução do Frontend, navegue para a pasta de Frontend e gere uma nova build
 
@@ -37,7 +37,7 @@ cd src/frontend
 npm run build
 
 
-### Execução 
+<h1>Execução</h1>  
 
 Execute acessando a pasta do Django e gerando o servidor local
 
